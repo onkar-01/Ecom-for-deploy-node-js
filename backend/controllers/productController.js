@@ -45,7 +45,32 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// get Products
+// Adjust the path as necessary
+
+exports.getProducts = catchAsyncErrors(async (req, res, next) => {
+  const per_page = parseInt(req.query.per_page) || 10; // Ensure base 10 for parsing
+  const currentPage = Math.max(parseInt(req.query.page) || 1, 1); // Ensure currentPage is at least 1
+
+  try {
+    const productCount = await Product.countDocuments({});
+
+    const apiFeature = ApiFeatures(Product.find(), req.query)
+      .pagination(per_page, currentPage)
+      .search();
+    const products = await apiFeature.query;
+
+    res.status(200).json({
+      success: true,
+      products,
+      productCount,
+      totalPages: Math.ceil(productCount / per_page), // Optional: Include total pages
+      currentPage, // Optional: Include current page
+    });
+  } catch (err) {
+    next(new ErrorHander(err.message, err.status || 500));
+  }
+});
+
 exports.getProductsByVendor = catchAsyncErrors(async (req, res, next) => {
   const { vendorId } = req.params; // Extract vendor ID from request params
 

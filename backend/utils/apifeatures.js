@@ -29,10 +29,21 @@ class ApiFeatures {
     return this;
   }
 
-  pagination(resultPerPage) {
-    const currentPage = Number(this.queryStr.page) || 1;
+  pagination(resultPerPage,page) {
+    // Ensure resultPerPage is a positive integer
+    if (typeof resultPerPage !== "number" || resultPerPage <= 0) {
+      throw new Error("resultPerPage must be a positive number");
+    }
+
+    // Get the current page from the query string, defaulting to 1
+    const currentPage = Math.max(Number(this.queryStr.page) || 1, 1); // Ensure currentPage is at least 1
+
+    // Calculate the number of documents to skip
     const skip = resultPerPage * (currentPage - 1);
+
+    // Apply limit and skip to the query
     this.query = this.query.limit(resultPerPage).skip(skip);
+
     return this;
   }
 }
