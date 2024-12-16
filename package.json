@@ -1,16 +1,16 @@
 {
   "name": "ecommerce",
   "version": "1.0.0",
-  "description": "",
+  "description": "E-commerce application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "start": "node index.js", 
+    "server": "nodemon index.js", 
+    "build": "npm install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
@@ -29,5 +29,6 @@
     "react-hot-toast": "^2.4.1",
     "sass": "^1.64.1",
     "validator": "^13.9.0"
-  }
+  },
+  "license": "ISC"
 }

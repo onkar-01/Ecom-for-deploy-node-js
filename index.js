@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
-const app = require("./backend/app");
-const { connectDB, photoCloud } = require("./backend/config/database");
+const app = require("./app");
+const { connectDB, photoCloud } = require("./config/database");
 
 process.on("uncaughtException", (err) => {
   console.log(`Error: ${err.message}`);
@@ -9,7 +9,7 @@ process.on("uncaughtException", (err) => {
 });
 
 //config
-dotenv.config({ path: "backend/config/config.env" });
+dotenv.config({ path: "config.env" });
 
 // call database connection
 connectDB();
